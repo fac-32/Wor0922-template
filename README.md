@@ -11,10 +11,9 @@ An interactive web page demonstrating DOM manipulation, event handling, and HTML
 - **Canvas Animation**: Ball that smoothly follows mouse cursor on canvas
 
 ## Tech used
-- HTML5 (including Canvas API)
-- CSS3
+- HTML
+- CSS
 - Vanilla JavaScript
-- DOM Manipulation
 
 ## File Structure
 ```
