@@ -28,67 +28,41 @@ form.addEventListener("submit", (event) => {
   form.reset();
 });
 
-const keyDownHandler = (event) => {
-  const spaceKey = 32;
+// Ball following mouse on canvas
+let circleWidth = 20;
+let mouseX = 350;
+let mouseY = 250;
+let ballX = 0;
+let ballY = 0;
 
-  if (event.keyCode === spaceKey) {
-  }
-};
-
-document.addEventListener("keydown", keyDownHandler);
-
-let ballX;
-let ballY;
-let power;
-let powerBuilding;
-let angle;
-let angleIncreasing;
-
-const animateBall = () => {
-  console.log(circleWidth);
-
-  if (growing) {
-    circleWidth += 5;
-    if (circleWidth > 40) {
-      growing = false;
-    }
-  } else {
-    circleWidth -= 5;
-    if (circleWidth < 10) {
-      growing = true;
-    }
-  }
-
-  context.clearRect(0, 0, canvas.width, canvas.height);
-  drawCircle(canvas, context);
-};
-
-const animatePowerBar = () => {};
-
-const animateAngleLine = () => {};
-
-const drawBall = (cvs, ctx) => {
+const drawBall = (ctx) => {
   ctx.fillStyle = "red";
   ctx.beginPath();
-  ctx.ellipse(
-    cvs.width / 2,
-    cvs.height / 2,
-    circleWidth,
-    circleWidth,
-    0,
-    0,
-    Math.PI * 2,
-  );
+  ctx.ellipse(ballX, ballY, circleWidth, circleWidth, 0, 0, Math.PI * 2);
   ctx.fill();
 };
 
-const drawPowerBar = (cvs, ctx) => {};
+function updateMouseCoordinates(event) {
+  const rect = canvas.getBoundingClientRect();
+  mouseX = event.clientX - rect.left;
+  mouseY = event.clientY - rect.top;
+}
 
-const drawAngleLine = (cvs, ctx) => {};
+const animateBall = () => {
+  context.clearRect(0, 0, canvas.width, canvas.height);
 
-const drawBin = (cvs, ctx) => {};
+  if (mouseX !== undefined && mouseY !== undefined) {
+    let speed = 0.3;
+    ballX += (mouseX - ballX) * speed;
+    ballY += (mouseY - ballY) * speed;
+  }
 
-const runGame = () => {};
+  drawBall(context);
+};
+
+const runGame = () => {
+  animateBall();
+};
 
 const canvasSection = document.createElement("section");
 canvasSection.classList.add("content-section");
@@ -104,6 +78,7 @@ canvasSection.appendChild(canvas);
 
 const context = canvas.getContext("2d");
 
+canvas.addEventListener("mousemove", updateMouseCoordinates);
 setInterval(runGame, 100);
 
 /* PROMPTS FOR ADDITIONAL INTERACTIONS
